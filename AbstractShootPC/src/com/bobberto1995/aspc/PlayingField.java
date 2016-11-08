@@ -7,6 +7,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.command.Command;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Transform;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class PlayingField
@@ -15,32 +16,30 @@ public class PlayingField
 	private Hud hud;
 	private ArrayList<Bullet> bullets;
 	private ArrayList<TestEnemyElement> enemies;
-	int width, height; // I think this will be 24 * 16
+	private int width, height; // I think this will be 24 * 16
 	private Rectangle cameraBounds; // camera positioning and use for GameElement.isOnCamera()
-	int offsetX, offsetY; // for camera panning
-	float camScale; // graphics width / 16
-	int mouseX, mouseY; // convert to local coordinates?
+	private float camScale; // graphics width / 16
+	private int mouseX, mouseY; // convert to local coordinates?
 	
 	public PlayingField(GameContainer gc, StateBasedGame sbg)
 	{
-		this.width = gc.getWidth();
-		this.height = gc.getHeight();
 		this.mouseX = 0;
 		this.mouseY = 0;
 		this.width = 24;
 		this.height = 16;
-		this.cameraBounds = new Rectangle(0,0,16,9); // adjust based on screen resolution
-		tpe = new TestPlayerElement(this, width / 2f, height / 2f);
+		this.cameraBounds = new Rectangle(0,0,16,9); // adjust y coordinate based on screen resolution
+		this.camScale = gc.getWidth() / 16f;
+		tpe = new TestPlayerElement(this,0.375f, 0.375f);
 		hud = new Hud(this, tpe);
 		bullets = new ArrayList<Bullet>();
 		enemies = new ArrayList<TestEnemyElement>();
-		enemies.add(new TestEnemyElement(this, 0,0,50,50));
-		enemies.add(new TestEnemyElement(this,this.width,0,50,50));
-		enemies.add(new TestEnemyElement(this,this.width,this.height,50,50));
-		enemies.add(new TestEnemyElement(this,0,this.height,50,50));
-		enemies.add(new TestEnemyElement(this,0,100,50,50));
-		enemies.add(new TestEnemyElement(this,0,200,50,50));
-		enemies.add(new TestEnemyElement(this,100,0,50,50));
+//		enemies.add(new TestEnemyElement(this, 0,0,50,50));
+//		enemies.add(new TestEnemyElement(this,this.width,0,50,50));
+//		enemies.add(new TestEnemyElement(this,this.width,this.height,50,50));
+//		enemies.add(new TestEnemyElement(this,0,this.height,50,50));
+//		enemies.add(new TestEnemyElement(this,0,100,50,50));
+//		enemies.add(new TestEnemyElement(this,0,200,50,50));
+//		enemies.add(new TestEnemyElement(this,100,0,50,50));
 	}
 	
 	public int getWidth()
@@ -53,14 +52,24 @@ public class PlayingField
 		return this.height;
 	}
 	
-	public int getMouseX()
+	public float getMouseX()
 	{
-		return this.mouseX - offsetX;
+		return this.mouseX / this.getCamScale() + this.getCameraBounds().getX();
 	}
 	
-	public int getMouseY()
+	public void setMouseX(int mouseX) // only used for getting mouseX from Game class
 	{
-		return this.mouseY - offsetY;
+		this.mouseX = mouseX;
+	}
+	
+	public float getMouseY()
+	{
+		return this.mouseY / this.getCamScale() + this.getCameraBounds().getY();
+	}
+	
+	public void setMouseY(int mouseY) // only used for getting mouseY from Game class
+	{
+		this.mouseY = mouseY;
 	}
 	
 	public Rectangle getCameraBounds() {
@@ -70,9 +79,30 @@ public class PlayingField
 	public void setCameraBounds(Rectangle cameraBounds) {
 		this.cameraBounds = cameraBounds;
 	}
-
+	
+	public void setCameraX(float x)
+	{
+		this.cameraBounds.setCenterX(x);
+	}
+	
+	public void setCameraY(float y)
+	{
+		this.cameraBounds.setCenterY(y);
+	}
+	
+	public float getCamScale()
+	{
+		return this.camScale;
+	}
+	
+	public void setCamScale(float camScale)
+	{
+		this.camScale = camScale;
+	}
+	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
 	{
+		// update entities
 		for(int i = bullets.size() - 1; i >= 0; i--)
 		{
 			bullets.get(i).update(gc, sbg, delta);
@@ -90,6 +120,37 @@ public class PlayingField
 			}
 		}
 		tpe.update(gc, sbg, delta);
+		
+		// update camera
+
+		this.setCameraX(this.getPlayer().getX());
+		this.setCameraY(this.getPlayer().getY());
+		
+		// check camera
+		float cbx = this.getCameraBounds().getCenterX();
+		float cby = this.getCameraBounds().getCenterY();
+		float cw = this.getCameraBounds().getWidth() / 2;
+		float ch = this.getCameraBounds().getHeight() / 2;
+		
+		if(cbx + 0.5 < cw)
+		{
+			this.setCameraX(cw-0.5f);
+		}
+		
+		if(cby + 0.5 < ch)
+		{
+			this.setCameraY(ch-0.5f);
+		}
+		
+		if(cbx + cw - 0.5 > this.getWidth())
+		{
+			this.setCameraX(this.getWidth() - cw + 0.5f);
+		}
+		
+		if(cby + ch - 0.5 > this.getHeight())
+		{
+			this.setCameraY(this.getHeight() - ch + 0.5f);
+		}
 	}
 	
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException

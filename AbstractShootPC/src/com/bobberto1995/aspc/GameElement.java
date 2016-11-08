@@ -11,14 +11,14 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class GameElement
 {
-	private static final int MAX_SPEED = 500;
+	private static final float MAX_SPEED = 2;
 	
 	private Vector2f velocity;
 	private Vector2f acceleration;
 	private boolean alive;
 	private PlayingField parent;
 	private Shape boundingBox; // needs a better name, not necessarily a box...
-	private int maxSpeed;
+	private float maxSpeed;
 	
 	public GameElement(PlayingField parent, float x, float y, float width, float height)
 	{
@@ -161,12 +161,12 @@ public class GameElement
 		else this.setDx(speed);
 	}
 	
-	public int getMaxSpeed()
+	public float getMaxSpeed()
 	{
 		return this.maxSpeed;
 	}
 	
-	public void setMaxSpeed(int maxSpeed)
+	public void setMaxSpeed(float maxSpeed)
 	{
 		this.maxSpeed = maxSpeed;
 	}
@@ -196,6 +196,11 @@ public class GameElement
 		return this.getBoundingBox().intersects(other.getBoundingBox());
 	}
 	
+	public boolean isOnCamera() // so we can render only the entities on the screen
+	{
+		return this.getBoundingBox().intersects(parent.getCameraBounds());
+	}
+	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
 	{
 		this.velocity.add(this.acceleration.copy().scale(delta / 1000f));
@@ -210,6 +215,10 @@ public class GameElement
 	
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
 	{
-		g.draw(this.getBoundingBox());
+		Rectangle cbb = parent.getCameraBounds();
+		float cs = parent.getCamScale();
+		Shape adjusted = this.getBoundingBox().transform( Transform.createScaleTransform(cs,cs));
+		adjusted = adjusted.transform( Transform.createTranslateTransform(-cbb.getX() * cs, -cbb.getY() * cs) );
+		g.draw(adjusted);
 	}
 }

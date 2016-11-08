@@ -77,12 +77,12 @@ public class Game extends BasicGameState implements InputProviderListener
 	}
 	public void mouseMoved(int oldx, int oldy, int newx, int newy)
 	{
-		tpf.mouseX = newx;
-		tpf.mouseY = newy;
+		tpf.setMouseX(newx);
+		tpf.setMouseY(newy);
 	}
 	public void mouseDragged(int oldx, int oldy, int newx, int newy)
 	{
-		tpf.mouseX = newx;
-		tpf.mouseY = newy;
+		tpf.setMouseX(newx);
+		tpf.setMouseY(newy);
 	}
 }

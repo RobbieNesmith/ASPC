@@ -9,9 +9,9 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class TestPlayerElement extends GameElement
 {
-	private static int ACCEL = 5000;
-	private static int FRIC = 1000;
-	private static int MAX_SPEED = 400;
+	private static float ACCEL = 40;
+	private static float FRIC = 10;
+	private static float MAX_SPEED = 5f;
 	private static float BOUNCE = 1f;
 
 	private int maxInvincibleTime;
@@ -26,12 +26,12 @@ public class TestPlayerElement extends GameElement
 	
 	public TestPlayerElement(PlayingField parent, float x, float y)
 	{
-		super(parent, x, y, 50, 50);
+		super(parent, x, y, 0.75f, 0.75f);
 		this.setMaxSpeed(TestPlayerElement.MAX_SPEED);
 		this.setMaxInvincibleTime(1000);
 		this.resetInvincibleTimer();
 		this.setHp(100);
-		this.playerWeapon = new Weapon(this.getParent(),250,1,0,1000);
+		this.playerWeapon = new Weapon(this.getParent(),250,1,0,8);
 		leftHeld = false;
 		rightHeld = false;
 		upHeld = false;
@@ -114,7 +114,7 @@ public class TestPlayerElement extends GameElement
 		}
 		
 		// movement
-		if(this.getSpeed() > 1) //set threshold so it doesn't get confused
+		if(this.getSpeed() > 0.1) //set threshold so it doesn't get confused
 		{
 			this.setAccelX(this.getDx() / this.getSpeed() * -FRIC); // set friction in the opposite direction of motion
 			this.setAccelY(this.getDy() / this.getSpeed() * -FRIC);
@@ -151,7 +151,7 @@ public class TestPlayerElement extends GameElement
 			this.setX(this.getWidth() - this.getX());
 			this.setDx(BOUNCE * Math.abs(this.getDx()));
 		}
-		if(this.getX() >= 1280 - this.getWidth() / 2)
+		if(this.getX() >= this.getParent().getWidth() - this.getWidth() / 2)
 		{
 			this.setX(2 * this.getParent().getWidth() - this.getWidth() - this.getX());
 			this.setDx(-BOUNCE * Math.abs(this.getDx()));
@@ -161,7 +161,7 @@ public class TestPlayerElement extends GameElement
 			this.setY(this.getHeight() - this.getY());
 			this.setDy(BOUNCE * Math.abs(this.getDy()));
 		}
-		if(this.getY() >= 720 - this.getHeight() / 2)
+		if(this.getY() >= this.getParent().getHeight() - this.getHeight() / 2)
 		{
 			this.setY(2 * this.getParent().getHeight() - this.getHeight() - this.getY());
 			this.setDy(-BOUNCE * Math.abs(this.getDy()));

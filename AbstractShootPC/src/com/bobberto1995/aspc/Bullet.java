@@ -6,11 +6,14 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class Bullet extends GameElement
 {
+	private static final float MAX_SPEED = 9001; // bullets don't accelerate, don't need a max speed
+	
 	public Bullet(PlayingField parent, float x, float y, float speed, float direction)
 	{
-		super(parent, x,y,10,10,10,10);
+		super(parent, x,y,1,1,0.2f,0.2f);
 		this.setSpeed(speed);
 		this.setDirection(direction);
+		this.setMaxSpeed(Bullet.MAX_SPEED);
 	}
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
 	{
