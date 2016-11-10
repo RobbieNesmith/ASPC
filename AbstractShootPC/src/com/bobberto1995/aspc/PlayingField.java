@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.command.Command;
 import org.newdawn.slick.geom.Rectangle;
@@ -13,6 +14,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class PlayingField
 {
 	private TestPlayerElement tpe;
+	private BackgroundImage bgi;
 	private Hud hud;
 	private ArrayList<Bullet> bullets;
 	private ArrayList<TestEnemyElement> enemies;
@@ -21,7 +23,7 @@ public class PlayingField
 	private float camScale; // graphics width / 16
 	private int mouseX, mouseY; // in local coordinates
 	
-	public PlayingField(GameContainer gc, StateBasedGame sbg)
+	public PlayingField(GameContainer gc, StateBasedGame sbg) throws SlickException
 	{
 		this.mouseX = 0;
 		this.mouseY = 0;
@@ -32,6 +34,7 @@ public class PlayingField
 		this.cameraBounds = new Rectangle(0,0,16,aspect * 16); // adjust y coordinate based on screen resolution
 		tpe = new TestPlayerElement(this,0.375f, 0.375f);
 		hud = new Hud(this, tpe);
+		bgi = new BackgroundImage(this,new Image("gfx/BGTileSmall.png"));
 		bullets = new ArrayList<Bullet>();
 		enemies = new ArrayList<TestEnemyElement>();
 		enemies.add(new TestEnemyElement(this, 0,0,0.75f,0.75f));
@@ -153,14 +156,24 @@ public class PlayingField
 	
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
 	{
+		//Rectangle bgRect = new Rectangle(0,0,gc.getWidth(),gc.getHeight());
+		//Image img = new Image("gfx/BGTile.png");
+		//g.fillRect(0,0,gc.getWidth(),gc.getHeight(),img,this.cameraBounds.getX() * this.camScale,this.cameraBounds.getY() * this.camScale);
+		bgi.render(gc, sbg, g);
 		hud.render(gc,sbg,g);
 		for(int i = bullets.size() - 1; i >= 0; i--)
 		{
-			bullets.get(i).render(gc, sbg, g);
+			if(bullets.get(i).isOnCamera())
+			{
+				bullets.get(i).render(gc, sbg, g);
+			}
 		}
 		for(int i = enemies.size() - 1; i >= 0; i--)
 		{
-			enemies.get(i).render(gc, sbg, g);
+			if(enemies.get(i).isOnCamera())
+			{
+				enemies.get(i).render(gc, sbg, g);
+			}
 		}
 		tpe.render(gc, sbg, g);
 	}

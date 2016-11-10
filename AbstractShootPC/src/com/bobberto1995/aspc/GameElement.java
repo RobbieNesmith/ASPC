@@ -1,5 +1,6 @@
 package com.bobberto1995.aspc;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -219,6 +220,9 @@ public class GameElement
 		float cs = parent.getCamScale();
 		Shape adjusted = this.getBoundingBox().transform( Transform.createScaleTransform(cs,cs));
 		adjusted = adjusted.transform( Transform.createTranslateTransform(-cbb.getX() * cs, -cbb.getY() * cs) );
+		g.setColor(Color.black);
+		g.fill(adjusted);
+		g.setColor(Color.white);
 		g.draw(adjusted);
 	}
 }

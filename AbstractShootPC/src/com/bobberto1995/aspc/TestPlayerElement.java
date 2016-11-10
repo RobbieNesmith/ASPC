@@ -52,17 +52,11 @@ public class TestPlayerElement extends GameElement
 	{
 		this.hp = hp;
 	}
-	public void setHp(int hp, boolean relative)
+	public void setHpRelative(int hp)
 	{
-		if(relative)
-		{
-			this.hp += hp;
-		}
-		else
-		{
-			this.hp = hp;
-		}
+		this.hp += hp;		
 	}
+	
 	public int getScore()
 	{
 		return score;
@@ -71,16 +65,9 @@ public class TestPlayerElement extends GameElement
 	{
 		this.score = score;
 	}
-	public void setScore(int score, boolean relative)
+	public void setScoreRelative(int score)
 	{
-		if(relative)
-		{
-			this.score += score;
-		}
-		else
-		{
-			this.score = score;
-		}
+		this.score += score;
 	}
 	public int getMaxInvincibleTime()
 	{
@@ -109,7 +96,7 @@ public class TestPlayerElement extends GameElement
 			if(this.intersects(tee) && this.invincibleTimer < 0)
 			{
 				this.resetInvincibleTimer();
-				this.setHp(-10, true);
+				this.setHpRelative(-tee.getDamage());
 			}
 		}
 		
