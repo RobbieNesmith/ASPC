@@ -18,7 +18,7 @@ public class Bullet extends GameElement
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
 	{
 		super.update(gc, sbg, delta);
-		if(this.getX() < 0 || this.getX() > 1280 || this.getY() < 0 || this.getY() > 720)
+		if(this.getX() < 0 || this.getX() > this.getParent().getWidth() || this.getY() < 0 || this.getY() > this.getParent().getHeight())
 		{
 			this.setAlive(false);
 		}

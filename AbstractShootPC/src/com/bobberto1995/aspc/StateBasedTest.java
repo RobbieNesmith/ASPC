@@ -34,7 +34,7 @@ public class StateBasedTest extends StateBasedGame
 			AppGameContainer app = new AppGameContainer(new StateBasedTest("State Based Test"));
 			app.setDisplayMode(WIDTH,HEIGHT, false);
 			app.setTargetFrameRate(FPS);
-			app.setShowFPS(true);
+			app.setShowFPS(false);
 			app.start();
 		}
 		catch(SlickException e)

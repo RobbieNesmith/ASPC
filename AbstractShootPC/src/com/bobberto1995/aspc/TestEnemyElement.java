@@ -8,16 +8,16 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class TestEnemyElement extends GameElement
 {
-	private static final int MAX_SPEED = 100;
-	private static final int FOLLOW_AMOUNT = 500;
-	private static final int AVOID_AMOUNT = -10000;
-	private static final int FLOCK_AMOUNT = 100;
+	private static final int MAX_SPEED = 2;
+	private static final int FOLLOW_AMOUNT = 8;
+	private static final int AVOID_AMOUNT = -4;
+	private static final int FLOCK_AMOUNT = 4;
 	private int hp;
 	
 	public TestEnemyElement(PlayingField parent, float x, float y, float width, float height)
 	{
 		super(parent, x, y, width, height);
-		this.setDx(100);
+		this.setDx(2);
 		this.setHp(100);
 		this.setMaxSpeed(TestEnemyElement.MAX_SPEED);
 	}

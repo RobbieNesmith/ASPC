@@ -63,7 +63,15 @@ public class Weapon
 		Bullet[] bullets = new Bullet[numFired];
 		for(int i = 0; i < numFired; i++)
 		{
-			float tempDir = (direction - this.getSpread() / 2) + ((float)i / numFired) * this.getSpread();
+			float tempDir;
+			if(numFired > 1)
+			{
+				tempDir = (direction - this.getSpread() / 2) + ((float)i / (numFired - 1)) * this.getSpread();
+			}
+			else
+			{
+				tempDir = direction;
+			}
 			bullets[i] = new Bullet(this.getParent(),x, y, this.speed, tempDir);
 		}
 		this.resetShotTimer();

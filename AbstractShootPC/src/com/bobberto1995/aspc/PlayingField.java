@@ -16,10 +16,10 @@ public class PlayingField
 	private Hud hud;
 	private ArrayList<Bullet> bullets;
 	private ArrayList<TestEnemyElement> enemies;
-	private int width, height; // I think this will be 24 * 16
+	private int width, height;
 	private Rectangle cameraBounds; // camera positioning and use for GameElement.isOnCamera()
 	private float camScale; // graphics width / 16
-	private int mouseX, mouseY; // convert to local coordinates?
+	private int mouseX, mouseY; // in local coordinates
 	
 	public PlayingField(GameContainer gc, StateBasedGame sbg)
 	{
@@ -27,19 +27,17 @@ public class PlayingField
 		this.mouseY = 0;
 		this.width = 24;
 		this.height = 16;
-		this.cameraBounds = new Rectangle(0,0,16,9); // adjust y coordinate based on screen resolution
+		float aspect = (float)gc.getHeight() / gc.getWidth();
 		this.camScale = gc.getWidth() / 16f;
+		this.cameraBounds = new Rectangle(0,0,16,aspect * 16); // adjust y coordinate based on screen resolution
 		tpe = new TestPlayerElement(this,0.375f, 0.375f);
 		hud = new Hud(this, tpe);
 		bullets = new ArrayList<Bullet>();
 		enemies = new ArrayList<TestEnemyElement>();
-//		enemies.add(new TestEnemyElement(this, 0,0,50,50));
-//		enemies.add(new TestEnemyElement(this,this.width,0,50,50));
-//		enemies.add(new TestEnemyElement(this,this.width,this.height,50,50));
-//		enemies.add(new TestEnemyElement(this,0,this.height,50,50));
-//		enemies.add(new TestEnemyElement(this,0,100,50,50));
-//		enemies.add(new TestEnemyElement(this,0,200,50,50));
-//		enemies.add(new TestEnemyElement(this,100,0,50,50));
+		enemies.add(new TestEnemyElement(this, 0,0,0.75f,0.75f));
+		enemies.add(new TestEnemyElement(this,this.width,0,0.75f,0.75f));
+		enemies.add(new TestEnemyElement(this,this.width,this.height,0.75f,0.75f));
+		enemies.add(new TestEnemyElement(this,0,this.height,0.75f,0.75f));
 	}
 	
 	public int getWidth()
