@@ -16,6 +16,7 @@ public class PlayingField
 	private TestPlayerElement tpe;
 	private BackgroundImage bgi;
 	private Hud hud;
+	private EnemyGenerator eg;
 	private ArrayList<Bullet> bullets;
 	private ArrayList<TestEnemyElement> enemies;
 	private int width, height;
@@ -35,12 +36,9 @@ public class PlayingField
 		tpe = new TestPlayerElement(this,0.375f, 0.375f);
 		hud = new Hud(this, tpe);
 		bgi = new BackgroundImage(this,new Image("gfx/BGTileSmall.png"));
+		eg = new EnemyGenerator(this);
 		bullets = new ArrayList<Bullet>();
 		enemies = new ArrayList<TestEnemyElement>();
-		enemies.add(new TestEnemyElement(this, 0,0,0.75f,0.75f));
-		enemies.add(new TestEnemyElement(this,this.width,0,0.75f,0.75f));
-		enemies.add(new TestEnemyElement(this,this.width,this.height,0.75f,0.75f));
-		enemies.add(new TestEnemyElement(this,0,this.height,0.75f,0.75f));
 	}
 	
 	public int getWidth()
@@ -152,6 +150,8 @@ public class PlayingField
 		{
 			this.setCameraY(this.getHeight() - ch + 0.5f);
 		}
+		
+		eg.update(gc, sbg, delta);
 	}
 	
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
