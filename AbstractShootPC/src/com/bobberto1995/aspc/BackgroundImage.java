@@ -24,7 +24,6 @@ public class BackgroundImage extends GameElement
 		float cs = this.getParent().getCamScale();
 		Shape adjusted = this.getBoundingBox().transform( Transform.createScaleTransform(cs,cs));
 		adjusted = adjusted.transform( Transform.createTranslateTransform(-cbb.getX() * cs, -cbb.getY() * cs) );
-		float imScale = 100;
 		float x = Math.max(adjusted.getX(), 0);
 		float y = Math.max(adjusted.getY(), 0);
 		float w = Math.min(adjusted.getMaxX(), gc.getWidth());
