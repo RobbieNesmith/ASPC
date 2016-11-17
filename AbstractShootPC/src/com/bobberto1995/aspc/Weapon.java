@@ -14,15 +14,29 @@ public class Weapon
 	public Weapon(PlayingField parent, int maxShotTime, int numFired, float spread, int speed) //also have damage and size later
 	{
 		this.setMaxShotTime(maxShotTime);
-		this.numFired = numFired;
+		this.setNumFired(numFired);
 		this.setSpread(spread);
 		this.parent = parent;
 		this.speed = speed;
 	}
 	
+	public Weapon(Weapon other)
+	{
+		this.setMaxShotTime(other.getMaxShotTime());
+		this.setNumFired(other.getNumFired());
+		this.setSpread(other.getSpread());
+		this.setParent(other.getParent());
+		this.setSpeed(other.getSpeed());
+	}
+	
 	public PlayingField getParent()
 	{
 		return parent;
+	}
+	
+	public void setParent(PlayingField parent)
+	{
+		this.parent = parent;
 	}
 
 	public int getMaxShotTime()
@@ -42,7 +56,27 @@ public class Weapon
 	public void setSpread(float spread) {
 		this.spread = spread;
 	}
-
+	
+	public int getNumFired()
+	{
+		return this.numFired;
+	}
+	
+	public void setNumFired(int numFired)
+	{
+		this.numFired = numFired;
+	}
+	
+	public int getSpeed()
+	{
+		return this.speed;
+	}
+	
+	public void setSpeed(int speed)
+	{
+		this.speed = speed;
+	}
+	
 	public void resetShotTimer()
 	{
 		this.shotTimer = this.getMaxShotTime();

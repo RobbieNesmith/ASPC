@@ -15,6 +15,14 @@ public class Bullet extends GameElement
 		this.setDirection(direction);
 		this.setMaxSpeed(Bullet.MAX_SPEED);
 	}
+	
+	public Bullet(Bullet other) // this needs some work.
+	{
+		super(other.getParent(), other.getX(),other.getY(),1,1,0.2f,0.2f);
+		this.setSpeed(other.getSpeed());
+		this.setDirection(other.getDirection());
+		this.setMaxSpeed(Bullet.MAX_SPEED);
+	}
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
 	{
 		super.update(gc, sbg, delta);
