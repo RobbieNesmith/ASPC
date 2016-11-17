@@ -1,5 +1,7 @@
 package com.bobberto1995.aspc;
 
+import java.io.FileNotFoundException;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -31,7 +33,14 @@ public class TestPlayerElement extends GameElement
 		this.setMaxInvincibleTime(1000);
 		this.resetInvincibleTimer();
 		this.setHp(100);
-		this.playerWeapon = new Weapon(this.getParent(),250,1,0,0.2f,8,10,10);
+		//this.playerWeapon = new Weapon(this.getParent(),250,1,0,0.2f,8,10,2.5f);
+		try {
+			this.playerWeapon = new Weapon(this.getParent(),WeaponListGenerator.generateListFromFile("gamedata/weapons.ini").get("Micrometeorite Gun"));
+		} catch (FileNotFoundException e) 
+		{
+			e.printStackTrace();
+			this.playerWeapon = new Weapon(this.getParent(),250,1,0,0.2f,8,10,2.5f);
+		}
 		leftHeld = false;
 		rightHeld = false;
 		upHeld = false;

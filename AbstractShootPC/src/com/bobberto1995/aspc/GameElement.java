@@ -45,6 +45,11 @@ public class GameElement
 	{
 		return parent;
 	}
+	
+	public void setParent(PlayingField parent)
+	{
+		this.parent = parent;
+	}
 
 	public Shape getBoundingBox()
 	{

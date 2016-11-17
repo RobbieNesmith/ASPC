@@ -5,7 +5,7 @@ public class Weapon
 	private int maxShotTime;
 	private int shotTimer;
 	private int numFired;
-	private int speed;
+	private float speed;
 	
 	private float spread;
 	
@@ -13,23 +13,25 @@ public class Weapon
 	
 	private Bullet bType;
 	
-	public Weapon(PlayingField parent, int maxShotTime, int numFired, float spread, float size, int speed, int damage,int range) //also have damage and size later
+	public Weapon(PlayingField parent, int maxShotTime, int numFired, float spread, float size, float speed, int damage,float range)
 	{
 		this.setMaxShotTime(maxShotTime);
 		this.setNumFired(numFired);
 		this.setSpread(spread);
-		this.parent = parent;
-		this.speed = speed;
-		bType = new Bullet(parent,0,0,size,speed,0,damage,range); // copy this when creating new bullets
+		this.setParent(parent);
+		this.setSpeed(speed);
+		this.bType = new Bullet(parent,0,0,size,speed,0,damage,range); // copy this when creating new bullets
 	}
 	
-	public Weapon(Weapon other)
+	public Weapon(PlayingField parent, Weapon other)
 	{
 		this.setMaxShotTime(other.getMaxShotTime());
 		this.setNumFired(other.getNumFired());
 		this.setSpread(other.getSpread());
-		this.setParent(other.getParent());
+		this.setParent(parent);
 		this.setSpeed(other.getSpeed());
+		this.setBtype(other.getBtype());
+		this.getBtype().setParent(parent);
 	}
 	
 	public PlayingField getParent()
@@ -70,14 +72,55 @@ public class Weapon
 		this.numFired = numFired;
 	}
 	
-	public int getSpeed()
+	public float getSpeed()
 	{
 		return this.speed;
 	}
 	
-	public void setSpeed(int speed)
+	public void setSpeed(float speed)
 	{
 		this.speed = speed;
+	}
+	
+	public float getSize()
+	{
+		return this.bType.getWidth();
+	}
+	
+	public int getDamage()
+	{
+		return this.bType.getDamage();
+	}
+	
+	public void setDamage(int damage)
+	{
+		this.bType.setDamage(damage);
+	}
+	
+	public float getRange()
+	{
+		return bType.getRange();
+	}
+	
+	public void setRange(float range)
+	{
+		this.bType.setRange(range);
+	}
+	
+	public void setSize(float size)
+	{
+		this.bType.setWidth(size);
+		this.bType.setHeight(size);
+	}
+	
+	public Bullet getBtype()
+	{
+		return this.bType;
+	}
+	
+	public void setBtype(Bullet bType)
+	{
+		this.bType = bType;
 	}
 	
 	public void resetShotTimer()
