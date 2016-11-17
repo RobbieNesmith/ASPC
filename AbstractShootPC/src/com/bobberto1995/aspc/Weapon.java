@@ -11,13 +11,16 @@ public class Weapon
 	
 	private PlayingField parent;
 	
-	public Weapon(PlayingField parent, int maxShotTime, int numFired, float spread, int speed) //also have damage and size later
+	private Bullet bType;
+	
+	public Weapon(PlayingField parent, int maxShotTime, int numFired, float spread, float size, int speed, int damage,int range) //also have damage and size later
 	{
 		this.setMaxShotTime(maxShotTime);
 		this.setNumFired(numFired);
 		this.setSpread(spread);
 		this.parent = parent;
 		this.speed = speed;
+		bType = new Bullet(parent,0,0,size,speed,0,damage,range); // copy this when creating new bullets
 	}
 	
 	public Weapon(Weapon other)
@@ -106,7 +109,8 @@ public class Weapon
 			{
 				tempDir = direction;
 			}
-			bullets[i] = new Bullet(this.getParent(),x, y, this.speed, tempDir);
+			bullets[i] = new Bullet(x, y, tempDir, this.bType);
+			//bullets[i] = new Bullet(this.getParent(),x,y,0.2f, this.getSpeed(),tempDir,10);
 		}
 		this.resetShotTimer();
 		return bullets;

@@ -31,7 +31,7 @@ public class TestPlayerElement extends GameElement
 		this.setMaxInvincibleTime(1000);
 		this.resetInvincibleTimer();
 		this.setHp(100);
-		this.playerWeapon = new Weapon(this.getParent(),250,1,0,8);
+		this.playerWeapon = new Weapon(this.getParent(),250,1,0,0.2f,8,10,10);
 		leftHeld = false;
 		rightHeld = false;
 		upHeld = false;
