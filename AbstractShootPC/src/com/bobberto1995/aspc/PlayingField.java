@@ -151,7 +151,7 @@ public class PlayingField
 			this.setCameraY(this.getHeight() - ch + 0.5f);
 		}
 		
-		eg.update(gc, sbg, delta);
+		//eg.update(gc, sbg, delta);
 	}
 	
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
