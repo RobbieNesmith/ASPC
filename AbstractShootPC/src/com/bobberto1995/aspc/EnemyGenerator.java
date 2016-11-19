@@ -52,6 +52,6 @@ public class EnemyGenerator
 			break;
 		}
 		
-		this.parent.addEnemy(new EnemyElement(parent, x, y, 0.75f, 0.75f));
+		this.parent.addEnemy(new EnemyElement(parent, x, y, 0.75f));
 	}
 }

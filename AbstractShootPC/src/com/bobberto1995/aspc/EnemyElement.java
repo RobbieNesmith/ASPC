@@ -16,15 +16,44 @@ public class EnemyElement extends GameElement
 	private int hp;
 	private int score; // how many points this is worth to kill
 	private int damage; // how much damage this enemy does to the player
+	private int dropChance; // percent chance EnemyElement will drop a Powerup
 	
-	public EnemyElement(PlayingField parent, float x, float y, float width, float height)
+	private int follow;
+	private int avoid;
+	private int flock;
+	
+	/*
+	 * Creates default EnemyElement
+	 * @param parent the PlayingField to contain the EnemyElement
+	 * @param x the x coordinate
+	 * @param y the y coordinate
+	 */
+	public EnemyElement(PlayingField parent, float x, float y, float size)
 	{
-		super(parent, x, y, width, height);
+		super(parent, x, y, size, size);
 		this.setDx(2);
 		this.setHp(100);
 		this.setScore(100);
 		this.setDamage(10);
 		this.setMaxSpeed(EnemyElement.MAX_SPEED);
+		this.setDropChance(10);
+		this.setFollow(8);
+		this.setAvoid(-4);
+		this.setFlock(4);
+	}
+	
+	public EnemyElement(PlayingField parent, float x, float y, float size, int hp, int score, int damage, int maxSpeed, int dropChance, int follow, int avoid, int flock)
+	{
+		super (parent,x,y,size,size);
+		this.setDx(2);
+		this.setHp(hp);
+		this.setScore(score);
+		this.setDamage(damage);
+		this.setMaxSpeed(maxSpeed);
+		this.setDropChance(dropChance);
+		this.setFollow(8);
+		this.setAvoid(-4);
+		this.setFlock(4);
 	}
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
 	{
@@ -144,6 +173,30 @@ public class EnemyElement extends GameElement
 	}
 	public void setDamage(int damage) {
 		this.damage = damage;
+	}
+	public int getDropChance() {
+		return dropChance;
+	}
+	public void setDropChance(int dropChance) {
+		this.dropChance = dropChance;
+	}
+	public int getFollow() {
+		return follow;
+	}
+	public void setFollow(int follow) {
+		this.follow = follow;
+	}
+	public int getAvoid() {
+		return avoid;
+	}
+	public void setAvoid(int avoid) {
+		this.avoid = avoid;
+	}
+	public int getFlock() {
+		return flock;
+	}
+	public void setFlock(int flock) {
+		this.flock = flock;
 	}
 	
 }
