@@ -7,9 +7,9 @@ import org.newdawn.slick.state.StateBasedGame;
 public class Hud
 {
 	private PlayingField parent;
-	private TestPlayerElement player;
+	private PlayerElement player;
 	
-	public Hud(PlayingField parent, TestPlayerElement player)
+	public Hud(PlayingField parent, PlayerElement player)
 	{
 		this.parent = parent;
 		this.player = player;
@@ -25,12 +25,12 @@ public class Hud
 		this.parent = parent;
 	}
 
-	public TestPlayerElement getPlayer()
+	public PlayerElement getPlayer()
 	{
 		return player;
 	}
 
-	public void setPlayer(TestPlayerElement player) 
+	public void setPlayer(PlayerElement player) 
 	{
 		this.player = player;
 	}

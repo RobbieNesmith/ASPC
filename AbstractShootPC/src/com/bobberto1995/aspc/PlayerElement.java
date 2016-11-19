@@ -9,7 +9,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 
-public class TestPlayerElement extends GameElement
+public class PlayerElement extends GameElement
 {
 	private static float ACCEL = 40;
 	private static float FRIC = 10;
@@ -26,10 +26,10 @@ public class TestPlayerElement extends GameElement
 	
 	private Weapon playerWeapon;
 	
-	public TestPlayerElement(PlayingField parent, float x, float y)
+	public PlayerElement(PlayingField parent, float x, float y)
 	{
 		super(parent, x, y, 0.75f, 0.75f);
-		this.setMaxSpeed(TestPlayerElement.MAX_SPEED);
+		this.setMaxSpeed(PlayerElement.MAX_SPEED);
 		this.setMaxInvincibleTime(1000);
 		this.resetInvincibleTimer();
 		this.setHp(100);
@@ -102,7 +102,7 @@ public class TestPlayerElement extends GameElement
 		// collision
 		this.decrementInvincibleTimer(delta);
 		
-		for(TestEnemyElement tee : this.getParent().getEnemies())
+		for(EnemyElement tee : this.getParent().getEnemies())
 		{
 			if(this.intersects(tee) && this.invincibleTimer < 0)
 			{

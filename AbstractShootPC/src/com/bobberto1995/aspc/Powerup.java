@@ -2,9 +2,9 @@ package com.bobberto1995.aspc;
 
 public class Powerup extends GameElement
 {
-	public Powerup(PlayingField parent, float x, float y, float width, float height)
+	public Powerup(PlayingField parent, float x, float y)
 	{
-		super(parent, x, y, width, height);
+		super(parent, x, y, 0.5f,0.5f);
 	}
 	
 }

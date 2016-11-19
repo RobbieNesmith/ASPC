@@ -13,12 +13,12 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class PlayingField
 {
-	private TestPlayerElement tpe;
+	private PlayerElement tpe;
 	private BackgroundImage bgi;
 	private Hud hud;
 	private EnemyGenerator eg;
 	private ArrayList<Bullet> bullets;
-	private ArrayList<TestEnemyElement> enemies;
+	private ArrayList<EnemyElement> enemies;
 	private int width, height;
 	private Rectangle cameraBounds; // camera positioning and use for GameElement.isOnCamera()
 	private float camScale; // graphics width / 16
@@ -33,12 +33,12 @@ public class PlayingField
 		float aspect = (float)gc.getHeight() / gc.getWidth();
 		this.camScale = gc.getWidth() / 16f;
 		this.cameraBounds = new Rectangle(0,0,16,aspect * 16); // adjust y coordinate based on screen resolution
-		tpe = new TestPlayerElement(this,0.375f, 0.375f);
+		tpe = new PlayerElement(this,0.375f, 0.375f);
 		hud = new Hud(this, tpe);
 		bgi = new BackgroundImage(this,new Image("gfx/BGTileSmall.png"));
 		eg = new EnemyGenerator(this);
 		bullets = new ArrayList<Bullet>();
-		enemies = new ArrayList<TestEnemyElement>();
+		enemies = new ArrayList<EnemyElement>();
 	}
 	
 	public int getWidth()
@@ -188,17 +188,17 @@ public class PlayingField
 		return this.bullets;
 	}
 	
-	public void addEnemy(TestEnemyElement e)
+	public void addEnemy(EnemyElement e)
 	{
 		enemies.add(e);
 	}
 	
-	public ArrayList<TestEnemyElement> getEnemies()
+	public ArrayList<EnemyElement> getEnemies()
 	{
 		return this.enemies;
 	}
 	
-	public TestPlayerElement getPlayer()
+	public PlayerElement getPlayer()
 	{
 		return this.tpe;
 	}

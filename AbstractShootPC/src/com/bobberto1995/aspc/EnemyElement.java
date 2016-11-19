@@ -7,7 +7,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class TestEnemyElement extends GameElement
+public class EnemyElement extends GameElement
 {
 	private static final int MAX_SPEED = 2;
 	private static final int FOLLOW_AMOUNT = 8;
@@ -17,14 +17,14 @@ public class TestEnemyElement extends GameElement
 	private int score; // how many points this is worth to kill
 	private int damage; // how much damage this enemy does to the player
 	
-	public TestEnemyElement(PlayingField parent, float x, float y, float width, float height)
+	public EnemyElement(PlayingField parent, float x, float y, float width, float height)
 	{
 		super(parent, x, y, width, height);
 		this.setDx(2);
 		this.setHp(100);
 		this.setScore(100);
 		this.setDamage(10);
-		this.setMaxSpeed(TestEnemyElement.MAX_SPEED);
+		this.setMaxSpeed(EnemyElement.MAX_SPEED);
 	}
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
 	{
@@ -46,7 +46,7 @@ public class TestEnemyElement extends GameElement
 			float averageX = 0;
 			float averageY = 0;
 			
-			for(TestEnemyElement tee : this.getParent().getEnemies())
+			for(EnemyElement tee : this.getParent().getEnemies())
 			{
 				if(!tee.equals(this))
 				{
