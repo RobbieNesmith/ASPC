@@ -5,31 +5,53 @@ public class Weapon
 	private int maxShotTime;
 	private int shotTimer;
 	private int numFired;
-	private float speed;
 	
-	private float spread;
+	private float speed, randSpeed;
+	private float spread, randSpread;
 	
 	private PlayingField parent;
 	
 	private Bullet bType;
 	
-	public Weapon(PlayingField parent, int maxShotTime, int numFired, float spread, float size, float speed, int damage,float range)
+	/*
+	* Creates a weapon with specific parameters
+	* @param parent the PlayingField to add bullets
+	* @param maxShotTime fire rate in milliseconds
+	* @param numFired number of projectiles fired
+	* @param spread the spread of projectiles in radians (for multi-shot)
+	* @param randSpread random spread modifier applied to individual bullets
+	* @param speed speed of bullets in units/second
+	* @param randSpeed random speed modifier applied to individual bullets
+	* @param damage damage of bullets
+	* @param range time bullet is alive in milliseconds
+	* @return Weapon object
+	*/
+	public Weapon(PlayingField parent, int maxShotTime, int numFired, float spread, float randSpread, float speed, float randSpeed, int damage,float range)
 	{
 		this.setMaxShotTime(maxShotTime);
 		this.setNumFired(numFired);
 		this.setSpread(spread);
+		this.setRandSpread(randSpread);
 		this.setParent(parent);
 		this.setSpeed(speed);
-		this.bType = new Bullet(parent,0,0,size,speed,0,damage,range); // copy this when creating new bullets
+		this.setRandSpeed(randSpeed);
+		this.bType = new Bullet(parent,0,0,speed,0,damage,range); // copy this when creating new bullets
 	}
-	
+	/*
+	 * Copies another weapon (useful for getting a weapon from a list)
+	 * @param parent the PlayingField to add bullets
+	 * @param other the Weapon to copy
+	 * @return Weapon object
+	 */
 	public Weapon(PlayingField parent, Weapon other)
 	{
 		this.setMaxShotTime(other.getMaxShotTime());
 		this.setNumFired(other.getNumFired());
 		this.setSpread(other.getSpread());
+		this.setRandSpread(other.getRandSpread());
 		this.setParent(parent);
 		this.setSpeed(other.getSpeed());
+		this.setRandSpeed(other.getRandSpeed());
 		this.setBtype(other.getBtype());
 		this.getBtype().setParent(parent);
 	}
@@ -62,6 +84,16 @@ public class Weapon
 		this.spread = spread;
 	}
 	
+	public float getRandSpread()
+	{
+		return this.randSpread;
+	}
+	
+	public void setRandSpread(float randSpread)
+	{
+		this.randSpread = randSpread;
+	}
+	
 	public int getNumFired()
 	{
 		return this.numFired;
@@ -80,6 +112,16 @@ public class Weapon
 	public void setSpeed(float speed)
 	{
 		this.speed = speed;
+	}
+	
+	public float getRandSpeed()
+	{
+		return this.randSpeed;
+	}
+	
+	public void setRandSpeed(float randSpeed)
+	{
+		this.randSpeed = randSpeed;
 	}
 	
 	public float getSize()
@@ -152,8 +194,10 @@ public class Weapon
 			{
 				tempDir = direction;
 			}
+			tempDir += (Math.random() * this.getRandSpread()) - this.getRandSpread() / 2;
 			bullets[i] = new Bullet(x, y, tempDir, this.bType);
-			//bullets[i] = new Bullet(this.getParent(),x,y,0.2f, this.getSpeed(),tempDir,10);
+			float speedMod = (float) ((Math.random() * this.getRandSpeed()) - this.getRandSpeed() / 2);
+			bullets[i].setSpeed(bullets[i].getSpeed() + speedMod);
 		}
 		this.resetShotTimer();
 		return bullets;

@@ -6,13 +6,24 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class Bullet extends GameElement
 {
-	private static final float MAX_SPEED = 9001; // bullets don't accelerate, don't need a max speed
+	private static final float MAX_SPEED = 9001; // bullets don't need a max speed
 	private int damage;
 	private float range;
 	
-	public Bullet(PlayingField parent, float x, float y, float size, float speed, float direction, int damage, float range)
+	/*
+	 * Creates a bullet with specific parameters
+	 * @param parent the PlayingField to contain the bullet
+	 * @param x the x coordinate in units
+	 * @param y the y coordinate in units
+	 * @param speed the speed of the bullet in units/second
+	 * @param direction the direction of the bullet in radians
+	 * @param damage the damage of the bullet
+	 * @param range how long the bullet is alive in milliseconds
+	 * @return Bullet object
+	 */
+	public Bullet(PlayingField parent, float x, float y, float speed, float direction, int damage, float range)
 	{
-		super(parent, x,y,1,1,size,size);
+		super(parent, x,y,1,1,0.1f + damage / 100f,0.1f + damage / 100f);
 		this.setSpeed(speed);
 		this.setDirection(direction);
 		this.setRange(range);
@@ -20,6 +31,14 @@ public class Bullet extends GameElement
 		this.setMaxSpeed(Bullet.MAX_SPEED);
 	}
 	
+	/*
+	 * Creates a bullet copy of another (useful for Weapon class)
+	 * @param x x coordinate of the bullet in units
+	 * @param y y coordinate of the bullet in units
+	 * @param direction the direction of the bullet in radians
+	 * @param other the bullet to copy data from
+	 * @return Bullet object
+	 */
 	public Bullet(float x, float y, float direction, Bullet other) // this needs some work.
 	{
 		super(other.getParent(), x, y,1,1,other.getWidth(),other.getHeight());
@@ -57,7 +76,7 @@ public class Bullet extends GameElement
 		{
 			this.setAlive(false);
 		}
-		this.setRange(this.getRange() - (this.getSpeed() * 2 * delta) / 1000); // need to actually figure out why it goes twice the specified distance
+		this.setRange(this.getRange() - delta);
 		if(this.getRange() < 0)
 		{
 			this.setAlive(false);

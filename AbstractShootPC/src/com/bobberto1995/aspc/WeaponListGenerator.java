@@ -22,8 +22,8 @@ public class WeaponListGenerator
 			String wName = "";
 			boolean isProjectile = false;
 			
-			float theSize = 0, theSpeed = 0, theRange = 0;
-			int theRate = 0, theDamage = 0;
+			float theSpeed = 0, randSpeed = 0, theRange = 0, theSpread = 0, randSpread = 0;
+			int theRate = 0, theDamage = 0, numProj = 1;
 			
 			while(weaponParser.hasNextLine())
 			{
@@ -37,17 +37,29 @@ public class WeaponListGenerator
 				{
 					isProjectile = line.substring(5).equals("1");
 				}
-				else if(line.startsWith("SIZE"))
+				else if(line.startsWith("NPRO"))
 				{
-					theSize = Integer.parseInt(line.substring(5)) / 50f;
+					numProj = Integer.parseInt(line.substring(5));
+				}
+				else if(line.startsWith("SPRD"))
+				{
+					theSpread = Float.parseFloat(line.substring(5));
+				}
+				else if(line.startsWith("RSPR"))
+				{
+					randSpread = Float.parseFloat(line.substring(5));
 				}
 				else if(line.startsWith("RATE"))
 				{
-					theRate = Integer.parseInt(line.substring(5)) * 60;
+					theRate = Integer.parseInt(line.substring(5));
 				}
 				else if(line.startsWith("SPED"))
 				{
-					theSpeed = Integer.parseInt(line.substring(5)) / 50f;
+					theSpeed = Float.parseFloat(line.substring(5));
+				}
+				else if(line.startsWith("RSPD"))
+				{
+					randSpeed = Float.parseFloat(line.substring(5));
 				}
 				else if(line.startsWith("DAMG"))
 				{
@@ -55,17 +67,17 @@ public class WeaponListGenerator
 				}
 				else if(line.startsWith("RANG"))
 				{
-					theRange = Integer.parseInt(line.substring(5)) / 50f;
+					theRange = Float.parseFloat(line.substring(5));
 				}
 			}
 			if(isProjectile)
 			{
-				// PlayingField parent, int maxShotTime, int numFired, float spread, float size, float speed, int damage,float range
-				Weapon theWeap = new Weapon(null, theRate, 1, 0, theSize, theSpeed, theDamage, theRange);
+				Weapon theWeap = new Weapon(null,theRate,numProj,theSpread,randSpread,theSpeed,randSpeed,theDamage,theRange);
 				result.put(wName, theWeap);
 			}
+			weaponParser.close();
 		}
-		
+		weaponReader.close();
 		return result;
 	}
 	
