@@ -1,5 +1,6 @@
 package com.bobberto1995.aspc;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import org.newdawn.slick.GameContainer;
@@ -27,6 +28,14 @@ public class PlayingField
 	
 	public PlayingField(GameContainer gc, StateBasedGame sbg) throws SlickException
 	{
+		try
+		{
+			WeaponListGenerator.generateListFromFile("gamedata/weapons.ini");
+		}
+		catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
 		this.mouseX = 0;
 		this.mouseY = 0;
 		this.width = 24;
@@ -104,6 +113,14 @@ public class PlayingField
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
 	{
 		// update entities
+		for(int i = powerups.size() - 1; i >= 0; i--)
+		{
+			powerups.get(i).update(gc, sbg, delta);
+			if(!powerups.get(i).isAlive())
+			{
+				powerups.remove(i);
+			}
+		}
 		for(int i = bullets.size() - 1; i >= 0; i--)
 		{
 			bullets.get(i).update(gc, sbg, delta);
@@ -158,9 +175,6 @@ public class PlayingField
 	
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
 	{
-		//Rectangle bgRect = new Rectangle(0,0,gc.getWidth(),gc.getHeight());
-		//Image img = new Image("gfx/BGTile.png");
-		//g.fillRect(0,0,gc.getWidth(),gc.getHeight(),img,this.cameraBounds.getX() * this.camScale,this.cameraBounds.getY() * this.camScale);
 		bgi.render(gc, sbg, g);
 		hud.render(gc,sbg,g);
 		for(int i = powerups.size() - 1; i >= 0; i--)

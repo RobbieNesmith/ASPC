@@ -36,9 +36,9 @@ public class PlayerElement extends GameElement
 		//this.playerWeapon = new Weapon(this.getParent(),250,1,0,0.2f,8,10,2.5f);
 		try
 		{
-			this.playerWeapon = new Weapon(this.getParent(),WeaponListGenerator.generateListFromFile("gamedata/weapons.ini").get("Shotgun"));
+			this.playerWeapon = new Weapon(this.getParent(),WeaponListGenerator.weaponList.get("Shotgun"));
 		}
-		catch (FileNotFoundException e) 
+		catch (Exception e) 
 		{
 			e.printStackTrace();
 			this.playerWeapon = new Weapon(this.getParent(),250,1,0,0,10,0,10,1000);

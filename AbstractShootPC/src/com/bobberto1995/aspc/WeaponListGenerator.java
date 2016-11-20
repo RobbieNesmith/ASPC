@@ -8,7 +8,9 @@ import java.util.Scanner;
 
 public class WeaponListGenerator
 {
-	public static HashMap<String,Weapon> generateListFromFile(String filename) throws FileNotFoundException
+	public static HashMap<String,Weapon> weaponList = new HashMap<String,Weapon>();
+	
+	public static HashMap<String,Weapon> getListFromFile(String filename) throws FileNotFoundException
 	{
 		HashMap<String,Weapon> result = new HashMap<String,Weapon>();
 		
@@ -81,10 +83,15 @@ public class WeaponListGenerator
 		return result;
 	}
 	
+	public static void generateListFromFile(String filename) throws FileNotFoundException
+	{
+		WeaponListGenerator.weaponList = WeaponListGenerator.getListFromFile(filename);
+	}
+	
 	public static void main(String[] args)
 	{
 		try {
-			HashMap<String, Weapon> foo = generateListFromFile("gamedata/weapons.ini");
+			HashMap<String, Weapon> foo = getListFromFile("gamedata/weapons.ini");
 			for(String key : foo.keySet())
 			{
 				System.out.println(key);
