@@ -48,11 +48,11 @@ public class PlayerElement extends GameElement
 		upHeld = false;
 		downHeld = false;
 	}
-	public Weapon getPlayerWeapon()
+	public Weapon getWeapon()
 	{
 		return playerWeapon;
 	}
-	public void setPlayerWeapon(Weapon playerWeapon)
+	public void setWeapon(Weapon playerWeapon)
 	{
 		this.playerWeapon = playerWeapon;
 	}
@@ -108,6 +108,15 @@ public class PlayerElement extends GameElement
 			{
 				this.resetInvincibleTimer();
 				this.setHpRelative(-tee.getDamage());
+			}
+		}
+		
+		for(Powerup p : this.getParent().getPowerups())
+		{
+			if(this.intersects(p))
+			{
+				this.parsePowerup(p);
+				p.setAlive(false);
 			}
 		}
 		
@@ -242,5 +251,29 @@ public class PlayerElement extends GameElement
 			}
 			playerWeapon.resetShotTimer();
 		}
+	}
+	
+	public void parsePowerup(Powerup p)
+	{
+		int type = p.getType();
+		String parm = p.getParameter();
+		switch(type)
+		{
+		case Powerup.HEAL:
+			this.setHpRelative(Integer.parseInt(parm));
+			break;
+		case Powerup.PLAYER_UPGRADE:
+			break;
+		case Powerup.WEAPON_UPGRADE:
+			break;
+		case Powerup.WEAPON_SWITCH:
+			this.setWeapon(WeaponListGenerator.weaponList.get(parm));
+			break;
+		case Powerup.SCORE_BONUS:
+			this.setScoreRelative(Integer.parseInt(parm));
+			break;
+		}
+		
+		
 	}
 }
