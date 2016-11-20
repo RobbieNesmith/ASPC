@@ -19,6 +19,7 @@ public class PlayingField
 	private EnemyGenerator eg;
 	private ArrayList<Bullet> bullets;
 	private ArrayList<EnemyElement> enemies;
+	private ArrayList<Powerup> powerups;
 	private int width, height;
 	private Rectangle cameraBounds; // camera positioning and use for GameElement.isOnCamera()
 	private float camScale; // graphics width / 16
@@ -39,6 +40,7 @@ public class PlayingField
 		eg = new EnemyGenerator(this);
 		bullets = new ArrayList<Bullet>();
 		enemies = new ArrayList<EnemyElement>();
+		powerups = new ArrayList<Powerup>();
 	}
 	
 	public int getWidth()
@@ -151,7 +153,7 @@ public class PlayingField
 			this.setCameraY(this.getHeight() - ch + 0.5f);
 		}
 		
-		//eg.update(gc, sbg, delta);
+		eg.update(gc, sbg, delta);
 	}
 	
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
@@ -161,6 +163,13 @@ public class PlayingField
 		//g.fillRect(0,0,gc.getWidth(),gc.getHeight(),img,this.cameraBounds.getX() * this.camScale,this.cameraBounds.getY() * this.camScale);
 		bgi.render(gc, sbg, g);
 		hud.render(gc,sbg,g);
+		for(int i = powerups.size() - 1; i >= 0; i--)
+		{
+			if(powerups.get(i).isOnCamera())
+			{
+				powerups.get(i).render(gc, sbg, g);
+			}
+		}
 		for(int i = bullets.size() - 1; i >= 0; i--)
 		{
 			if(bullets.get(i).isOnCamera())
@@ -186,6 +195,16 @@ public class PlayingField
 	public ArrayList<Bullet> getBullets()
 	{
 		return this.bullets;
+	}
+	
+	public void addPowerup(Powerup p)
+	{
+		this.powerups.add(p);
+	}
+	
+	public ArrayList<Powerup> getPowerups()
+	{
+		return this.powerups;
 	}
 	
 	public void addEnemy(EnemyElement e)
