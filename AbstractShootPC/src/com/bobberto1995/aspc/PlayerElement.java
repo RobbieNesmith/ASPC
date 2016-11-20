@@ -1,7 +1,5 @@
 package com.bobberto1995.aspc;
 
-import java.io.FileNotFoundException;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
