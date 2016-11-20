@@ -87,18 +87,4 @@ public class WeaponListGenerator
 	{
 		WeaponListGenerator.weaponList = WeaponListGenerator.getListFromFile(filename);
 	}
-	
-	public static void main(String[] args)
-	{
-		try {
-			HashMap<String, Weapon> foo = getListFromFile("gamedata/weapons.ini");
-			for(String key : foo.keySet())
-			{
-				System.out.println(key);
-			}
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 }

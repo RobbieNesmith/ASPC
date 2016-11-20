@@ -28,14 +28,6 @@ public class PlayingField
 	
 	public PlayingField(GameContainer gc, StateBasedGame sbg) throws SlickException
 	{
-		try
-		{
-			WeaponListGenerator.generateListFromFile("gamedata/weapons.ini");
-		}
-		catch (FileNotFoundException e)
-		{
-			e.printStackTrace();
-		}
 		this.mouseX = 0;
 		this.mouseY = 0;
 		this.width = 24;

@@ -34,6 +34,15 @@ public class Game extends BasicGameState implements InputProviderListener
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException
 	{
+		try
+		{
+			WeaponListGenerator.generateListFromFile("gamedata/weapons.ini");
+			PowerupListGenerator.generateListFromFile("gamedata/powerups.ini");
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		tpf = new PlayingField(gc,sbg);
 		provider = new InputProvider(gc.getInput());
 		provider.addListener(this);

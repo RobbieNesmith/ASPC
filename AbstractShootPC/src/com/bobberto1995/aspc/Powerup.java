@@ -30,6 +30,20 @@ public class Powerup extends GameElement
 		this.setParameter("20");
 	}
 	
+	public Powerup(PlayingField parent,float x, float y,int type, String parm)
+	{
+		super(parent,x,y,0.5f,0.5f);
+		this.setType(type);
+		this.setParameter(parm);
+	}
+	
+	public Powerup(PlayingField parent, float x, float y, Powerup other)
+	{
+		super(parent,x,y,0.5f,0.5f);
+		this.setType(other.getType());
+		this.setParameter(other.getParameter());
+	}
+	
 	public int getType()
 	{
 		return type;
