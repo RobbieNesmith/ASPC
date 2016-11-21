@@ -124,9 +124,10 @@ public class EnemyElement extends GameElement
 		{
 			this.setAlive(false);
 			this.getParent().getPlayer().setScoreRelative(this.getScore());
-			if(Math.random() * 100 < this.getDropChance())
+			if(Math.random() * 0 < this.getDropChance())
 			{
-				this.getParent().addPowerup(new Powerup(this.getParent(), this.getX(), this.getY()));
+				Powerup dropped = PowerupListGenerator.getRandomPowerup();
+				this.getParent().addPowerup(new Powerup(this.getParent(), this.getX(), this.getY(), dropped));
 			}
 		}
 		

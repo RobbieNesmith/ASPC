@@ -265,7 +265,7 @@ public class PlayerElement extends GameElement
 		case Powerup.WEAPON_UPGRADE:
 			break;
 		case Powerup.WEAPON_SWITCH:
-			this.setWeapon(WeaponListGenerator.weaponList.get(parm));
+			this.setWeapon(new Weapon(this.getParent(), WeaponListGenerator.weaponList.get(parm)));
 			break;
 		case Powerup.SCORE_BONUS:
 			this.setScoreRelative(Integer.parseInt(parm));

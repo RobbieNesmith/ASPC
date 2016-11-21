@@ -204,7 +204,15 @@ public class GameElement
 	
 	public boolean isOnCamera() // so we can render only the entities on the screen
 	{
-		return this.getBoundingBox().intersects(parent.getCameraBounds());
+		try
+		{
+			return this.getBoundingBox().intersects(parent.getCameraBounds());
+		}
+		catch(Exception e)
+		{
+			System.out.println(this.getParent());
+			return false;
+		}
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException

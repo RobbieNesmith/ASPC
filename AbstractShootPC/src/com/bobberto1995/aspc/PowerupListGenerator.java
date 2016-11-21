@@ -52,4 +52,9 @@ public class PowerupListGenerator
 	{
 		PowerupListGenerator.powerupList = PowerupListGenerator.getListFromFile(filename);
 	}
+	
+	public static Powerup getRandomPowerup()
+	{
+		return powerupList.get((int)(Math.random() * powerupList.size()));
+	}
 }

@@ -25,7 +25,7 @@ public class Powerup extends GameElement
 	public Powerup(PlayingField parent, float x, float y)
 	{
 		super(parent, x, y, 0.5f,0.5f);
-		timeAlive = 10000;
+		this.timeAlive = 10000;
 		this.setType(Powerup.HEAL);
 		this.setParameter("20");
 	}
@@ -33,6 +33,7 @@ public class Powerup extends GameElement
 	public Powerup(PlayingField parent,float x, float y,int type, String parm)
 	{
 		super(parent,x,y,0.5f,0.5f);
+		this.timeAlive = 10000;
 		this.setType(type);
 		this.setParameter(parm);
 	}
@@ -40,6 +41,7 @@ public class Powerup extends GameElement
 	public Powerup(PlayingField parent, float x, float y, Powerup other)
 	{
 		super(parent,x,y,0.5f,0.5f);
+		this.timeAlive = 10000;
 		this.setType(other.getType());
 		this.setParameter(other.getParameter());
 	}
