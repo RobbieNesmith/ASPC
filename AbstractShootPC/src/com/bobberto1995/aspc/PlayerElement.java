@@ -18,6 +18,7 @@ public class PlayerElement extends GameElement
 	private int invincibleTimer;
 	
 	private int hp;
+	private int maxHp;
 	private int score;
 	
 	private boolean leftHeld, rightHeld, upHeld, downHeld, mouseHeld;
@@ -66,6 +67,12 @@ public class PlayerElement extends GameElement
 		this.hp += hp;		
 	}
 	
+	public int getMaxHp() {
+		return maxHp;
+	}
+	public void setMaxHp(int maxHp) {
+		this.maxHp = maxHp;
+	}
 	public int getScore()
 	{
 		return score;
@@ -259,6 +266,10 @@ public class PlayerElement extends GameElement
 		{
 		case Powerup.HEAL:
 			this.setHpRelative(Integer.parseInt(parm));
+			if(this.getHp() > this.getMaxHp())
+			{
+				this.setHp(this.getMaxHp());
+			}
 			break;
 		case Powerup.PLAYER_UPGRADE:
 			break;
