@@ -117,7 +117,7 @@ public class EnemyElement extends GameElement
 				b.setAlive(false);
 				this.setDx(this.getDx() + b.getDx()); 
 				this.setDy(this.getDy() + b.getDy());
-				this.setHp(this.getHp() - 10);
+				this.setHp(this.getHp() - b.getDamage());
 			}
 		}
 		if(this.getHp() <= 0)
