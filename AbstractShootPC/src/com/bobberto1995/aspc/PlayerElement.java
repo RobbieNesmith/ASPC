@@ -31,11 +31,12 @@ public class PlayerElement extends GameElement
 		this.setMaxSpeed(PlayerElement.MAX_SPEED);
 		this.setMaxInvincibleTime(1000);
 		this.resetInvincibleTimer();
-		this.setHp(100);
+		this.setMaxHp(100);
+		this.setHp(this.getMaxHp());
 		//this.playerWeapon = new Weapon(this.getParent(),250,1,0,0.2f,8,10,2.5f);
 		try
 		{
-			this.playerWeapon = new Weapon(this.getParent(),WeaponListGenerator.weaponList.get("Shotgun"));
+			this.playerWeapon = new Weapon(this.getParent(),WeaponListGenerator.weaponList.get("Default"));
 		}
 		catch (Exception e) 
 		{

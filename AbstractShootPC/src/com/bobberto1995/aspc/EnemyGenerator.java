@@ -13,7 +13,7 @@ public class EnemyGenerator
 	public EnemyGenerator(PlayingField parent)
 	{
 		this.parent = parent;
-		this.maxGeneratorTime = 1000;
+		this.maxGeneratorTime = 5000;
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
