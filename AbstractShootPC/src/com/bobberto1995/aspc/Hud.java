@@ -37,7 +37,7 @@ public class Hud
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 	{
 		g.drawRect(0, 0, gc.getWidth(), 20);
-		g.fillRect(0, 0, gc.getWidth() * (player.getHp() / 100f), 20);
+		g.fillRect(0, 0, gc.getWidth() * (player.getHp() / (float)player.getMaxHp()), 20);
 		g.drawString("Score: " + this.getPlayer().getScore(), 0, gc.getHeight()-100);
 		// display player score
 	}
