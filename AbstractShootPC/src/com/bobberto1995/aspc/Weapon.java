@@ -52,7 +52,7 @@ public class Weapon
 		this.setParent(parent);
 		this.setSpeed(other.getSpeed());
 		this.setRandSpeed(other.getRandSpeed());
-		this.setBtype(other.getBtype());
+		this.setBtype(new Bullet(0,0,0,other.getBtype()));
 		this.getBtype().setParent(parent);
 	}
 	

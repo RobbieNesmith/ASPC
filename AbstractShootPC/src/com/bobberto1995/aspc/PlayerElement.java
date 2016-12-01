@@ -269,6 +269,7 @@ public class PlayerElement extends GameElement
 		case Powerup.HEAL:
 			this.setHpRelative(Integer.parseInt(parm));
 			System.out.println("Heal " + parm);
+			System.out.println("Your health: " + this.getHp());
 			if(this.getHp() > this.getMaxHp())
 			{
 				this.setHp(this.getMaxHp());
@@ -285,7 +286,8 @@ public class PlayerElement extends GameElement
 			else if(parts[0].equals("SPED"))
 			{
 				System.out.println("Speed Up: " + parts[1]);
-				this.setMaxSpeed(this.getMaxSpeed() + Integer.parseInt(parts[1]));
+				System.out.println("Your max speed: " + this.getMaxSpeed());
+				this.setMaxSpeed(this.getMaxSpeed() + Float.parseFloat(parts[1]));
 			}
 			break;
 		case Powerup.WEAPON_UPGRADE:
@@ -301,13 +303,16 @@ public class PlayerElement extends GameElement
 			{
 				int rate = this.getWeapon().getMaxShotTime();
 				rate *= 0.1;
-				this.getWeapon().setMaxShotTime(this.getWeapon().getMaxShotTime() + Math.min(Integer.parseInt(parts[1]),-1));
+				System.out.println("Reload time decreased by " + Math.abs((Math.min(Integer.parseInt(parts[1]) * rate,-1))) + " ms.");
+				this.getWeapon().setMaxShotTime(this.getWeapon().getMaxShotTime() + Math.min(Integer.parseInt(parts[1]) * rate,-1));
 			}
 			break;
 		case Powerup.WEAPON_SWITCH:
+			System.out.println("Switching weapon to: " + parm);
 			this.setWeapon(new Weapon(this.getParent(), WeaponListGenerator.weaponList.get(parm)));
 			break;
 		case Powerup.SCORE_BONUS:
+			System.out.println("Adding " + parm + " to score.");
 			this.setScoreRelative(Integer.parseInt(parm));
 			break;
 		}
