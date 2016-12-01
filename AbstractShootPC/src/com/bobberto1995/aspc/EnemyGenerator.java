@@ -54,4 +54,14 @@ public class EnemyGenerator
 		
 		this.parent.addEnemy(new EnemyElement(parent, x, y, 0.75f));
 	}
+	
+	public int getMaxGeneratorTime()
+	{
+		return this.maxGeneratorTime;
+	}
+	
+	public void setMaxGeneratorTime(int mgt)
+	{
+		this.maxGeneratorTime = mgt;
+	}
 }

@@ -159,6 +159,7 @@ public class PlayingField
 			this.setCameraY(this.getHeight() - ch + 0.5f);
 		}
 		
+		eg.setMaxGeneratorTime(5000 - (tpe.getScore() / 100));
 		eg.update(gc, sbg, delta);
 	}
 	
