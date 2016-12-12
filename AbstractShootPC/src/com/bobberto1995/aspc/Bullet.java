@@ -41,7 +41,7 @@ public class Bullet extends GameElement
 	 */
 	public Bullet(float x, float y, float direction, Bullet other) // this needs some work.
 	{
-		super(other.getParent(), x, y,1,1,other.getWidth(),other.getHeight());
+		super(other.getParent(), x, y,1,1,0.1f + other.getDamage() / 100f,0.1f + other.getDamage() / 100f);
 		this.setSpeed(other.getSpeed());
 		this.setDirection(direction);
 		this.setRange(other.getRange());

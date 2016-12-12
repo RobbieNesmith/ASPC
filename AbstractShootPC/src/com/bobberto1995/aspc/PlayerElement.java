@@ -306,6 +306,34 @@ public class PlayerElement extends GameElement
 				System.out.println("Reload time decreased by " + Math.abs((Math.min(Integer.parseInt(parts[1]) * rate,-1))) + " ms.");
 				this.getWeapon().setMaxShotTime(this.getWeapon().getMaxShotTime() + Math.min(Integer.parseInt(parts[1]) * rate,-1));
 			}
+			else if(parts[0].equals("RSPR"))
+			{
+				float rspr = this.getWeapon().getRandSpread();
+				if(rspr > 0)
+				{
+					System.out.println("Spread changed by " + parts[1]);
+					this.getWeapon().setRandSpread(this.getWeapon().getRandSpread() * Float.parseFloat(parts[1]));
+				}
+				else if(Float.parseFloat(parts[1]) > 1)
+				{
+					System.out.println("Spread set to " + Math.PI / 32f);
+					this.getWeapon().setRandSpread((float) (Math.PI / 32f));
+				}
+			}
+			else if(parts[0].equals("NPRO"))	
+			{
+				this.getWeapon().setNumFired(this.getWeapon().getNumFired() + Integer.parseInt(parts[1]));
+				System.out.println("Number of projectiles: " + this.getWeapon().getNumFired());
+			}
+			else if(parts[0].equals("RANG"))
+			{
+				this.getWeapon().setRange(this.getWeapon().getRange() + Integer.parseInt(parts[1]));
+				System.out.println("Range Up: " + parts[1]);
+			}
+			else
+			{
+				System.out.println("Unimplemented: " + parts[0]);
+			}
 			break;
 		case Powerup.WEAPON_SWITCH:
 			System.out.println("Switching weapon to: " + parm);
