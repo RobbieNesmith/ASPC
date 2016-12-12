@@ -16,6 +16,7 @@ public class GameElement
 	
 	private Vector2f velocity;
 	private Vector2f acceleration;
+	private Vector2f prevacc;
 	private boolean alive;
 	private PlayingField parent;
 	private Shape boundingBox; // needs a better name, not necessarily a box...
@@ -25,6 +26,7 @@ public class GameElement
 	{
 		this.velocity = new Vector2f(0,0);
 		this.acceleration = new Vector2f(0,0);
+		this.prevacc = new Vector2f(0,0);
 		this.setAlive(true);
 		this.parent = parent;
 		this.setBoundingBox(new Rectangle(x - width / 2f, y - height / 2f, width, height));
@@ -35,6 +37,7 @@ public class GameElement
 	{
 		this.velocity = new Vector2f(dx, dy);
 		this.acceleration = new Vector2f(0,0);
+		this.prevacc = new Vector2f(0,0);
 		this.setAlive(true);
 		this.parent = parent;
 		this.setBoundingBox(new Rectangle(x - width / 2f, y - height / 2f, width, height));
@@ -103,6 +106,11 @@ public class GameElement
 		this.boundingBox = this.boundingBox.transform(Transform.createScaleTransform(1,yScale));
 	}
 	
+	public Vector2f getVelocity()
+	{
+		return this.velocity;
+	}
+	
 	public float getDx()
 	{
 		return this.velocity.getX();
@@ -120,6 +128,12 @@ public class GameElement
 	public void setDy(float dy)
 	{
 		this.velocity.set(this.velocity.getX(), dy);
+	}
+	
+	
+	public Vector2f getAcceleration()
+	{
+		return this.acceleration;
 	}
 	
 	public float getAccelX()
@@ -215,13 +229,22 @@ public class GameElement
 		}
 	}
 	
+	public void applyForce(Vector2f force)
+	{
+		this.acceleration.add(force);
+	}
+	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
 	{
-		this.velocity.add(this.acceleration.copy().scale(delta / 1000f));
+		this.acceleration.scale(delta / 1000f);
+		this.velocity.add(this.acceleration);
 		if(this.getSpeed() > this.getMaxSpeed())
 		{
 			this.setSpeed(this.getMaxSpeed());
+			System.out.println("Max speed reached: " + this.getMaxSpeed());
 		}
+		this.prevacc = this.acceleration.copy();
+		this.acceleration.scale(0);
 		Vector2f scaled = this.velocity.copy().scale(delta / 1000f);
 		this.setX(this.getX() + scaled.getX());
 		this.setY(this.getY() + scaled.getY());
@@ -229,13 +252,23 @@ public class GameElement
 	
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
 	{
+		g.pushTransform();
 		Rectangle cbb = parent.getCameraBounds();
 		float cs = parent.getCamScale();
-		Shape adjusted = this.getBoundingBox().transform( Transform.createScaleTransform(cs,cs));
-		adjusted = adjusted.transform( Transform.createTranslateTransform(-cbb.getX() * cs, -cbb.getY() * cs) );
+		
+		g.translate(-cbb.getX() * cs, -cbb.getY() * cs);
+		g.scale(cs, cs);
+		
 		g.setColor(Color.black);
-		g.fill(adjusted);
+		g.fill(this.getBoundingBox());
 		g.setColor(Color.white);
-		g.draw(adjusted);
+		g.draw(this.getBoundingBox());
+
+		g.setColor(Color.red);
+		g.drawLine(this.getX(), this.getY(), this.getX() + this.getDx(), this.getY() + this.getDy());
+		g.setColor(Color.blue);
+		g.drawLine(this.getX(), this.getY(), this.getX() + this.prevacc.x, this.getY() + this.prevacc.y);
+		g.setColor(Color.white);
+		g.popTransform();
 	}
 }

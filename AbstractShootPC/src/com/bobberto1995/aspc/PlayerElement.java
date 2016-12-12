@@ -4,6 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 
@@ -127,36 +128,35 @@ public class PlayerElement extends GameElement
 		}
 		
 		// movement
-		if(this.getSpeed() > 0.1) //set threshold so it doesn't get confused
+//		Vector2f fricVec = this.getVelocity();
+//		fricVec = fricVec.normalise();
+//		fricVec.scale(-FRIC / 1000);
+//		this.applyForce(fricVec);
+
+		if(this.getSpeed() > 0.1)
 		{
-			this.setAccelX(this.getDx() / this.getSpeed() * -FRIC); // set friction in the opposite direction of motion
-			this.setAccelY(this.getDy() / this.getSpeed() * -FRIC);
+			this.applyForce(this.getVelocity().copy().normalise().scale(-FRIC));
 		}
-		else
-		{
-			this.setAccelX(0); // to prevent drift when player shouldn't be moving
-			this.setAccelY(0);
-			this.setDx(0);
-			this.setDy(0);
-		}
+		
 		if(leftHeld)
 		{
-			this.setAccelX(-ACCEL);
+			this.applyForce(new Vector2f(-ACCEL,0));
 		}
 		if(rightHeld)
 		{
-			this.setAccelX(ACCEL);
+			this.applyForce(new Vector2f(ACCEL,0));
 		}
 		if(upHeld)
 		{
-			this.setAccelY(-ACCEL);
+			this.applyForce(new Vector2f(0,-ACCEL));
 		}
 		if(downHeld)
 		{
-			this.setAccelY(ACCEL);
+			this.applyForce(new Vector2f(0,ACCEL));
 		}
-		super.update(gc, sbg, delta);
+
 		
+		super.update(gc, sbg, delta);
 		// do bounce calculations after changing position
 		
 		if(this.getX() <= this.getWidth() / 2)
@@ -197,11 +197,6 @@ public class PlayerElement extends GameElement
 			g.setColor(Color.white);
 		}
 		super.render(gc,sbg,g);
-//		g.setColor(Color.red);
-//		g.drawLine(this.getX(), this.getY(), this.getX() + this.getDx(), this.getY() + this.getDy());
-//		g.setColor(Color.blue);
-//		g.drawLine(this.getX(), this.getY(), this.getX() + this.getAccelX(), this.getY() + this.getAccelY());
-		g.setColor(Color.white);
 	}
 	public void leftPressed()
 	{
