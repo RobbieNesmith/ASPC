@@ -128,12 +128,8 @@ public class PlayerElement extends GameElement
 		}
 		
 		// movement
-//		Vector2f fricVec = this.getVelocity();
-//		fricVec = fricVec.normalise();
-//		fricVec.scale(-FRIC / 1000);
-//		this.applyForce(fricVec);
 
-		if(this.getSpeed() > 0.1)
+		if(this.getSpeed() > 0.1) //friction threshold so it doesn't get confused
 		{
 			this.applyForce(this.getVelocity().copy().normalise().scale(-FRIC));
 		}

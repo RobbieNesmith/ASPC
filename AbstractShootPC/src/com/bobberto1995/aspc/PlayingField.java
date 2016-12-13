@@ -32,13 +32,17 @@ public class PlayingField
 		float aspect = (float)gc.getHeight() / gc.getWidth();
 		this.camScale = gc.getWidth() / 16f;
 		this.cameraBounds = new Rectangle(0,0,16,aspect * 16); // adjust y coordinate based on screen resolution
-		tpe = new PlayerElement(this,0.375f, 0.375f);
+		tpe = new PlayerElement(this,12, 8);
 		hud = new Hud(this, tpe);
 		bgi = new BackgroundImage(this,new Image("gfx/BGTileSmall.png"));
 		eg = new EnemyGenerator(this);
 		bullets = new ArrayList<Bullet>();
 		enemies = new ArrayList<EnemyElement>();
 		powerups = new ArrayList<Powerup>();
+//		enemies.add(new EnemyElement(this, 11, 7, 0.75f, 100, 10, 10, 2, 100, 8, 4, -4));
+//		enemies.add(new EnemyElement(this, 13, 7, 0.75f, 100, 10, 10, 2, 100, 8, 4, -4));
+//		enemies.add(new EnemyElement(this, 13, 9, 0.75f, 100, 10, 10, 2, 100, 8, 4, -4));
+//		enemies.add(new EnemyElement(this, 11, 9, 0.75f, 100, 10, 10, 2, 100, 8, 4, -4));
 	}
 	
 	public int getWidth()
@@ -159,8 +163,8 @@ public class PlayingField
 			this.setCameraY(this.getHeight() - ch + 0.5f);
 		}
 		
-		//eg.setMaxGeneratorTime(5000 - (tpe.getScore() / 100));
-		//eg.update(gc, sbg, delta);
+		eg.setMaxGeneratorTime(5000 - (tpe.getScore() / 100));
+		eg.update(gc, sbg, delta);
 	}
 	
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException

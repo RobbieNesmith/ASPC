@@ -64,6 +64,11 @@ public class GameElement
 		this.boundingBox = boundingBox;
 	}
 
+	public Vector2f getLoc()
+	{
+		return new Vector2f(this.getBoundingBox().getCenter());
+	}
+	
 	public float getX()
 	{
 		return this.boundingBox.getCenterX();
@@ -211,6 +216,11 @@ public class GameElement
 		return dir;
 	}
 	
+	public Vector2f getVectorTo(GameElement other)
+	{
+		return this.getLoc().sub(other.getLoc());
+	}
+	
 	public boolean intersects(GameElement other)
 	{
 		return this.getBoundingBox().intersects(other.getBoundingBox());
@@ -241,7 +251,6 @@ public class GameElement
 		if(this.getSpeed() > this.getMaxSpeed())
 		{
 			this.setSpeed(this.getMaxSpeed());
-			System.out.println("Max speed reached: " + this.getMaxSpeed());
 		}
 		this.prevacc = this.acceleration.copy();
 		this.acceleration.scale(0);

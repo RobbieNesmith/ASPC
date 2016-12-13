@@ -3,6 +3,7 @@ package com.bobberto1995.aspc;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class EnemyElement extends GameElement
@@ -20,6 +21,8 @@ public class EnemyElement extends GameElement
 	private int avoid;
 	private int flock;
 	
+	private Pathfinder pathfinder;
+	
 	/*
 	 * Creates default EnemyElement
 	 * @param parent the PlayingField to contain the EnemyElement
@@ -35,9 +38,7 @@ public class EnemyElement extends GameElement
 		this.setDamage(10);
 		this.setMaxSpeed(EnemyElement.MAX_SPEED);
 		this.setDropChance(10);
-		this.setFollow(8);
-		this.setAvoid(-4);
-		this.setFlock(4);
+		this.pathfinder = new PathfinderSwarm(this,this.getParent().getPlayer());
 	}
 	
 	public EnemyElement(PlayingField parent, float x, float y, float size, int hp, int score, int damage, int maxSpeed, int dropChance, int follow, int avoid, int flock)
@@ -49,64 +50,21 @@ public class EnemyElement extends GameElement
 		this.setDamage(damage);
 		this.setMaxSpeed(maxSpeed);
 		this.setDropChance(dropChance);
-		this.setFollow(8);
-		this.setAvoid(-4);
-		this.setFlock(4);
+		this.pathfinder = new PathfinderSwarm(this,this.getParent().getPlayer());
 	}
+	
+	public Pathfinder getPathfinder()
+	{
+		return this.pathfinder;
+	}
+	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
 	{
 		// steering
 		
-		float followX = (this.getParent().getPlayer().getX() - this.getX());
-		float followY = (this.getParent().getPlayer().getY() - this.getY());
+		Vector2f inf = this.getPathfinder().getInfluence(delta);
+		this.applyForce(inf);
 		
-		float followMagnitude = (float) Math.sqrt(Math.pow(followX, 2) + Math.pow(followY, 2));
-		
-		followX *= FOLLOW_AMOUNT / followMagnitude;
-		followY *= FOLLOW_AMOUNT / followMagnitude;
-		
-		this.setAccelX(followX);  // steer towards goal (player)
-		this.setAccelY(followY);
-		
-		if(this.getParent().getEnemies().size() > 1) // steer towards center of mass, avoid other enemies
-		{
-			float averageX = 0;
-			float averageY = 0;
-			
-			for(EnemyElement tee : this.getParent().getEnemies())
-			{
-				if(!tee.equals(this))
-				{
-					averageX += tee.getX();
-					averageY += tee.getY();
-					float avoidX = (tee.getX() - this.getX());
-					float avoidY = (tee.getY() - this.getY());
-					float avoidMagnitude = (float) Math.sqrt(Math.pow(avoidX, 2) + Math.pow(avoidY, 2));
-					
-					avoidX *= AVOID_AMOUNT / Math.pow(avoidMagnitude, 2);
-					avoidY *= AVOID_AMOUNT / Math.pow(avoidMagnitude, 2); // quadratically inversely proportionate to distance
-					
-					this.setAccelX(this.getAccelX() + avoidX);
-					this.setAccelY(this.getAccelY() + avoidY);
-				}
-			}
-			
-			int numEnemies = this.getParent().getEnemies().size();
-			
-			averageX /= numEnemies;
-			averageY /= numEnemies;
-			
-			float flockX = averageX - this.getX();
-			float flockY = averageY - this.getY();
-			
-			float flockMagnitude = (float) Math.sqrt(Math.pow(flockX, 2) + Math.pow(flockY, 2));
-			
-			flockX *= FLOCK_AMOUNT / flockMagnitude;
-			flockY *= FLOCK_AMOUNT / flockMagnitude;
-			
-			this.setAccelX(this.getAccelX() + flockX);
-			this.setAccelY(this.getAccelY() + flockY);
-		}
 		
 		// collide with bullets
 		
@@ -140,22 +98,6 @@ public class EnemyElement extends GameElement
 	{
 		//g.drawString("Theta: " + this.getDirection() + "\n" + this.getDirectionTo(this.getParent().getPlayer()), this.getX(),this.getY());
 		super.render(gc, sbg, g);
-		
-		// display velocity and acceleration vectors
-//		Rectangle cbb = this.getParent().getCameraBounds();
-//		float cs = this.getParent().getCamScale();
-//		float tempX = (this.getX() - cbb.getX()) * cs;
-//		float tempY = (this.getY() - cbb.getY()) * cs;
-//		float tdX = (this.getX() + this.getDx() - cbb.getX()) * cs;
-//		float tdY = (this.getY() + this.getDy() - cbb.getY()) * cs;
-//		float taX = (this.getX() + this.getAccelX() - cbb.getX()) * cs;
-//		float taY = (this.getY() + this.getAccelY() - cbb.getY()) * cs;
-//		
-//		g.setColor(Color.red);
-//		g.drawLine(tempX, tempY, tdX, tdY);
-//		g.setColor(Color.blue);
-//		g.drawLine(tempX, tempY, taX, taY);
-//		g.setColor(Color.white);
 	}
 	public int getHp()
 	{
