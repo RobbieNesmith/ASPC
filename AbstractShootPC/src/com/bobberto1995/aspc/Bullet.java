@@ -9,6 +9,7 @@ public class Bullet extends GameElement
 	private static final float MAX_SPEED = 9001; // bullets don't need a max speed
 	private int damage;
 	private float range;
+	private boolean playerOwns;
 	
 	/*
 	 * Creates a bullet with specific parameters
@@ -29,6 +30,7 @@ public class Bullet extends GameElement
 		this.setRange(range);
 		this.setDamage(damage);
 		this.setMaxSpeed(Bullet.MAX_SPEED);
+		this.setOwner(true);
 	}
 	
 	/*
@@ -47,6 +49,7 @@ public class Bullet extends GameElement
 		this.setRange(other.getRange());
 		this.setDamage(other.getDamage());
 		this.setMaxSpeed(Bullet.MAX_SPEED);
+		this.setOwner(true);
 	}
 	
 	public int getDamage()
@@ -68,7 +71,17 @@ public class Bullet extends GameElement
 	{
 		this.range = range;
 	}
-
+	
+	public boolean getOwner()
+	{
+		return this.playerOwns;
+	}
+	
+	public void setOwner(boolean owner)
+	{
+		this.playerOwns = owner;
+	}
+	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
 	{
 		if(this.getX() < 0 || this.getX() > this.getParent().getWidth() || this.getY() < 0 || this.getY() > this.getParent().getHeight()) // kill if out of world

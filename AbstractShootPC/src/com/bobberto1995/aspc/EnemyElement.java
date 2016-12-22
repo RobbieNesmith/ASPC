@@ -70,7 +70,7 @@ public class EnemyElement extends GameElement
 		
 		for(Bullet b : this.getParent().getBullets())
 		{
-			if(this.intersects(b) && b.isAlive())
+			if(this.intersects(b) && this.getHp() > 0 && b.isAlive() && !b.getOwner())
 			{
 				b.setAlive(false);
 				this.setDx(this.getDx() + b.getDx()); 
