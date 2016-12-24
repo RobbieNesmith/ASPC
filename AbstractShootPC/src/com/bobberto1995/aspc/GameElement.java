@@ -221,6 +221,11 @@ public class GameElement
 		return this.getLoc().sub(other.getLoc());
 	}
 	
+	public float getDistanceTo(GameElement other)
+	{
+		return this.getVectorTo(other).length();
+	}
+	
 	public boolean intersects(GameElement other)
 	{
 		return this.getBoundingBox().intersects(other.getBoundingBox());

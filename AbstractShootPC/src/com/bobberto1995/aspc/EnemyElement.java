@@ -9,9 +9,6 @@ import org.newdawn.slick.state.StateBasedGame;
 public class EnemyElement extends GameElement
 {
 	private static final int MAX_SPEED = 2;
-	private static final int FOLLOW_AMOUNT = 8;
-	private static final int AVOID_AMOUNT = -4;
-	private static final int FLOCK_AMOUNT = 4;
 	private int hp;
 	private int score; // how many points this is worth to kill
 	private int damage; // how much damage this enemy does to the player
