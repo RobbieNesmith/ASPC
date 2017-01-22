@@ -67,7 +67,7 @@ public class EnemyElement extends GameElement
 		
 		for(Bullet b : this.getParent().getBullets())
 		{
-			if(this.intersects(b) && this.getHp() > 0 && b.isAlive() && !b.getOwner())
+			if(this.intersects(b) && this.getHp() > 0 && b.isAlive() && b.getOwner())
 			{
 				b.setAlive(false);
 				this.setDx(this.getDx() + b.getDx()); 
@@ -79,7 +79,7 @@ public class EnemyElement extends GameElement
 		{
 			this.setAlive(false);
 			this.getParent().getPlayer().setScoreRelative(this.getScore());
-			if(Math.random() * 0 < this.getDropChance())
+			if(Math.random() * 100 < this.getDropChance())
 			{
 				Powerup dropped = PowerupListGenerator.getRandomPowerup();
 				this.getParent().addPowerup(new Powerup(this.getParent(), this.getX(), this.getY(), dropped));

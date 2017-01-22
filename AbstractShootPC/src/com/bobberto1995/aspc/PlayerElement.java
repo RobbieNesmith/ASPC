@@ -286,16 +286,18 @@ public class PlayerElement extends GameElement
 			if(parts[0].equals("DAMG"))
 			{
 				int damg = this.getWeapon().getDamage();
-				damg *= 0.1;
+				float scale = Float.parseFloat(parts[1]);
+				damg *= scale;
 				this.getWeapon().setDamage(this.getWeapon().getDamage() + Math.max(damg,1));
 				System.out.println("Weapon Damage = " + this.getWeapon().getDamage());
 			}
 			else if(parts[0].equals("RATE"))
 			{
 				int rate = this.getWeapon().getMaxShotTime();
-				rate *= 0.1;
+				float scale = Float.parseFloat(parts[1]);
+				rate *= scale;
 				System.out.println("Reload time decreased by " + Math.abs((Math.min(Integer.parseInt(parts[1]) * rate,-1))) + " ms.");
-				this.getWeapon().setMaxShotTime(this.getWeapon().getMaxShotTime() + Math.min(Integer.parseInt(parts[1]) * rate,-1));
+				this.getWeapon().setMaxShotTime(this.getWeapon().getMaxShotTime() + Math.min(rate,-1));
 			}
 			else if(parts[0].equals("RSPR"))
 			{
@@ -307,13 +309,17 @@ public class PlayerElement extends GameElement
 				}
 				else if(Float.parseFloat(parts[1]) > 1)
 				{
-					System.out.println("Spread set to " + Math.PI / 32f);
-					this.getWeapon().setRandSpread((float) (Math.PI / 32f));
+					System.out.println("Spread set to " + Math.PI / 16f);
+					this.getWeapon().setRandSpread((float) (Math.PI / 16f));
 				}
 			}
 			else if(parts[0].equals("NPRO"))	
 			{
 				this.getWeapon().setNumFired(this.getWeapon().getNumFired() + Integer.parseInt(parts[1]));
+				if(this.getWeapon().getSpread() == 0)
+				{
+					this.getWeapon().setSpread((float)(Math.PI / 16f));
+				}
 				System.out.println("Number of projectiles: " + this.getWeapon().getNumFired());
 			}
 			else if(parts[0].equals("RANG"))
